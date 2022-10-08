@@ -66,13 +66,14 @@ df = pd.DataFrame()
 df["dist"] = arcs
 df["start"] = starts[0:-1]
 df["stop"] = starts[1:]
+plt.style.use('dark_background')
 fig = plt.figure(figsize=(16, 12))
 ax = fig.gca(projection="polar")
 
 core_nsamples = int(1000. * (CORE_STOP - 0))
 core_t = np.linspace(0, CORE_STOP, core_nsamples)
 core_theta = 2 * np.pi * core_t
-ax.plot(core_theta, core_t, lw=LINEWIDTH, color="white", solid_capstyle=CAPSTYLE, alpha=ALPHA)
+ax.plot(core_theta, core_t, lw=LINEWIDTH, color="black", solid_capstyle=CAPSTYLE, alpha=ALPHA)
 
 for idx, event in df.iterrows():
     # sample normalized distance from colormap
@@ -85,7 +86,7 @@ for idx, event in df.iterrows():
     theta = 2 * np.pi * t
     arc, = ax.plot(theta, t, lw=LINEWIDTH, color=color, solid_capstyle=CAPSTYLE, alpha=ALPHA)
     if EDGEWIDTH > 0:
-        arc.set_path_effects([mpe.Stroke(linewidth=LINEWIDTH+EDGEWIDTH, foreground='white'), mpe.Normal()])
+        arc.set_path_effects([mpe.Stroke(linewidth=LINEWIDTH+EDGEWIDTH, foreground='black'), mpe.Normal()])
 
 
 # grid and labels
@@ -101,13 +102,15 @@ vmin = df['dist'].min()
 norm = mpl.colors.Normalize(vmin=vmin, vmax=real_limit)
 sm = plt.cm.ScalarMappable(cmap=COLORMAP, norm=norm)
 sm.set_array([])
-tick_font_size = 10
 ticks = np.linspace(vmin, real_limit, 10)
 tick_labels = [f"{int(inverse_scale_2(t, px_ratio))}" for t in ticks]
 tick_labels[-1] += "+"
 cbar = plt.colorbar(
     sm, ticks=ticks, fraction=0.04, 
-    aspect=60, pad=0.1, label="magnitude", ax=ax
+    aspect=60, pad=0.1, ax=ax
 )
 cbar.ax.set_yticklabels(tick_labels)
+cbar.ax.tick_params(labelsize=15)
+cbar.set_label(label='duration',size=15,weight='bold')
+
 plt.show()
