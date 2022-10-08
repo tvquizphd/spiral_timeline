@@ -1,3 +1,3 @@
 # spiral_timeline
 
-![image](https://user-images.githubusercontent.com/75504552/194643826-f155bb61-30b2-4746-8643-337763f120ea.png)
+![image](https:/tvquizphd/spiral_timeline/blob/main/spiral.png?raw=true)
